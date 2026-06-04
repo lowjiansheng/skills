@@ -23,7 +23,7 @@ Follow this decision tree **before every session**. Do not skip to Step 2 until 
    │     → Run `payments-mcp:get_wallet_balance`
    │          ├── Success → x402 is ready on Base. Proceed to Step 2.
    │          └── Error   → Run `payments-mcp:show_wallet_app`, then prompt user (see Setup below)
-   ├── `onchainos` / OKX Agentic Wallet (OKX Wallet → X Layer USDT/USDG)
+   ├── `onchainos` / OKX Agentic Wallet (OKX Wallet → X Layer USDT)
    │     → Confirm the wallet is signed in and funded on X Layer. Proceed to Step 2.
    └── Neither → Is $MESSARI_API_KEY set or has the user provided an API key?
                   ├── YES → API key mode. Include `x-messari-api-key: <key>` on all requests. Proceed to Step 2.
@@ -49,7 +49,7 @@ the user wants to pay on — wallet and chain are paired:
 | Wallet | Chain | Asset | When to use |
 |---|---|---|---|
 | **Coinbase Wallet** *(default)* | Base | USDC | Default path. Broadest endpoint coverage. |
-| **OKX Wallet** | X Layer | USDT (mainnet) / USDG (testnet) | User has OKX Wallet, asks for X Layer, or wants OKX's sponsored-gas / sub-cent economics. **Coinbase Wallet does not work on X Layer.** |
+| **OKX Wallet** | X Layer | USDT (USD₮0) | User has OKX Wallet, asks for X Layer, or wants OKX's sponsored-gas / sub-cent economics. **Coinbase Wallet does not work on X Layer.** |
 
 **Routing rule:**
 - User mentions **OKX Wallet** → set them up on X Layer (OKX path below).
@@ -80,7 +80,7 @@ If x402 is not yet configured, tell the user:
 
 After the user has installed and restarted, run `payments-mcp:show_wallet_app` to open the wallet and prompt them to sign in and deposit USDC.
 
-#### Alternative path: OKX Wallet → X Layer USDT/USDG
+#### Alternative path: OKX Wallet → X Layer USDT
 
 Use this when the user already has OKX Wallet, asks specifically for X Layer, or wants OKX's
 ecosystem benefits (sponsored gas, sub-cent fees). Tell the user:
@@ -97,9 +97,7 @@ ecosystem benefits (sponsored gas, sub-cent fees). Tell the user:
 >
 > 3. Sign in — ask your agent to "Log in to Agentic Wallet with email", then enter your email and the OTP code. The wallet generates an EVM + Solana address (private keys stay inside OKX's TEE and are never exposed to the model).
 >
-> 4. Fund the EVM address on X Layer:
->    - **Mainnet** (`eip155:196`): deposit USDT (USD₮0, `0x779D…3736`)
->    - **Testnet** (`eip155:1952`): deposit USDG (Global Dollar, `0xF086…78DF`)
+> 4. Fund the EVM address on X Layer mainnet (`eip155:196`): deposit USDT (USD₮0, `0x779D…3736`).
 >
 > OKX sponsors gas on X Layer when eligible, so deposits go almost entirely toward API requests.
 
