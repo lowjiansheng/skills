@@ -60,8 +60,7 @@ x402 endpoints negotiate the chain and asset at runtime via the `402` challenge.
 |---|---|---|---|
 | Base (`eip155:8453`) | USDC | Coinbase / CDP | Default for most x402 routes. |
 | Solana mainnet | USDC | Solana x402 payer | Requires a Solana keypair, not an EVM key. |
-| X Layer mainnet (`eip155:196`) | USDT (USD₮0) | OKX | EVM-compatible — same Python flow as Base, different asset. OKX sponsors gas when eligible. |
-| X Layer testnet (`eip155:1952`) | USDG (Global Dollar) | OKX | EVM-compatible testnet path. |
+| X Layer (`eip155:196`) | USDT (USD₮0) | OKX | EVM-compatible — same Python flow as Base, different asset. OKX sponsors gas when eligible. |
 
 **Wallet pairing:** users on OKX Wallet should route to X Layer (Coinbase's facilitator does
 not support X Layer). Users on Coinbase Wallet should route to Base. The same EVM
