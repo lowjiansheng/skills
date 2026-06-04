@@ -27,8 +27,15 @@ Follow this decision tree **before every session**. Do not skip to Step 2 until 
    │     → Confirm the wallet is signed in and funded on X Layer. Proceed to Step 2.
    └── Neither → Is $MESSARI_API_KEY set or has the user provided an API key?
                   ├── YES → API key mode. Include `x-messari-api-key: <key>` on all requests. Proceed to Step 2.
-                  └── NO  → Nothing is configured. Prompt user (see Setup below).
+                  └── NO  → No wallet + no API key. Choose the setup path by the user's intent (see Setup):
+                              • Wants X Layer / has an OKX Wallet → install OKX: `npx skills add okx/onchainos-skills`
+                              • Otherwise → install Coinbase: `npx @coinbase/payments-mcp --client claude --auto-config`
 ```
+
+> **Install the wallet that matches the chain the user wants — don't fall back to the other chain
+> just because its connector happens to be present.** If the user wants X Layer but only
+> `payments-mcp` (Coinbase) is installed, install the OKX `onchainos` wallet skill rather than
+> routing them to Base; and vice-versa.
 
 **Wallet ↔ chain pairing** (do not mix): Coinbase Wallet settles on Base. OKX Wallet settles on
 X Layer. If the user mentions either OKX Wallet or X Layer, route them through the OKX path
@@ -48,6 +55,10 @@ the user wants to pay on — wallet and chain are paired:
 - User mentions **OKX Wallet** → set them up on X Layer (OKX path below).
 - User mentions **X Layer** → set them up with OKX Wallet (OKX path below).
 - Otherwise → default to Coinbase Wallet on Base.
+
+If the matching wallet connector isn't installed yet, install it first (the command is in each
+path below) — the OKX path requires the `onchainos` wallet skill, which is **not** installed by
+default. Only the user can run the `npx` install and sign in; surface the command and wait.
 
 #### Default path: Coinbase Wallet → Base USDC
 
